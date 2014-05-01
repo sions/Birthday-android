@@ -14,5 +14,6 @@
     <string name="delete_item">Delete</string>
     <string name="send_item">Send wishes</string>
     
-    
+    <string name="happy_birthday_email_title">Happy birthday %1$s</string>
+    <string name="happy_birthday_email_text">Mazel Tov!</string>    
 </resources>
