@@ -7,17 +7,14 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +41,9 @@ public class MainActivity extends Activity {
 	    public void setPhoto(String value) {
 		      intent.putExtra("photo", value);
 		    }
+	    public void setEmail(String value) {
+		      intent.putExtra("email", value);
+		    }
 	    public Intent build() {
 	      return intent;
 	    }
@@ -53,10 +53,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
 
 		TextView currentDate = (TextView) findViewById(R.id.today);
 		String currentDateTimeString = DateFormat.getDateTimeInstance().format(
@@ -92,6 +88,7 @@ public class MainActivity extends Activity {
 			builder.setName(record.getName());
 			builder.setBirthday(record.getBirthday());
 			builder.setPhoto(record.getPhoto());
+			builder.setEmail(record.getEmail());
 		}
 		Intent intent = builder.build();
 		startActivity(intent);
@@ -158,31 +155,5 @@ public class MainActivity extends Activity {
         default:
             return super.onOptionsItemSelected(item);
         }
-		
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		/*int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);*/
-	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
 	}
 }

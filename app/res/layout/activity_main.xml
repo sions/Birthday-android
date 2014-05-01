@@ -7,21 +7,19 @@
     tools:context="com.masa.birthday.MainActivity"
     tools:ignore="MergeRootFrame" >
 
-       <TextView
-            android:id="@+id/today"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="10dp"
-            android:background="@android:color/holo_blue_bright" />
-        
+    <TextView
+        android:id="@+id/today"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_green_light"
+        android:gravity="center"
+        android:padding="10dp" />
+
     <ListView
         android:id="@+id/birthdays"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-         >
+        android:orientation="vertical" >
     </ListView>
 
-    
 </LinearLayout>
