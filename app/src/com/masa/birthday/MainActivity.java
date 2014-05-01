@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,7 +51,7 @@ public class MainActivity extends Activity {
 			
 		});
 
-		ListView listView = (ListView) findViewById(R.id.birthdays);
+		final ListView listView = (ListView) findViewById(R.id.birthdays);
 		BirthdayRecord sions =
 				new BirthdayRecord(
 						"sions",
@@ -67,11 +68,7 @@ public class MainActivity extends Activity {
 		birthdays.add(sions);
 		BirthdayRecordAdapter adapter = new BirthdayRecordAdapter(this,  birthdays);
 		listView.setAdapter(adapter);
-/*		listView.setOnClickListener(new android.view.View.OnClickListener() {
-			public void onClick(View arg0) {
-				context
-			};
-		}*/
+		
 		// To register the button with context menu.
 		registerForContextMenu(listView);
 		//listView.setOnItemClickListener((OnItemClickListener) this);
