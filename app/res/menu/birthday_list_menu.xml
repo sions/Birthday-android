@@ -4,20 +4,17 @@
 
     <item
         android:id="@+id/delete"
-        android:orderInCategory="100"
-        android:showAsAction="never"
+        android:showAsAction="always"
         android:title="@string/delete_item"/>
 
     <item
         android:id="@+id/send"
-        android:orderInCategory="100"
-        android:showAsAction="never"
+        android:showAsAction="always"
         android:title="@string/send_item"/>
     
     <item
         android:id="@+id/edit"
-        android:orderInCategory="100"
-        android:showAsAction="never"
+        android:showAsAction="always"
         android:title="@string/edit_item"/>
     
 </menu>
