@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
 
 			
 		});
-
+
 		listView = (ListView) findViewById(R.id.birthdays);
 		BirthdayRecord sions =
 				new BirthdayRecord(
