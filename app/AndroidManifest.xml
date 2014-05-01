@@ -29,6 +29,10 @@
             android:name="com.masa.birthday.EditBirthdayActivity"
             android:label="@string/app_name" >
         </activity>
+        <service 
+            android:enabled="true" 
+            android:name=".BirthdayNotificationService" />
+        
     </application>
 
 </manifest>

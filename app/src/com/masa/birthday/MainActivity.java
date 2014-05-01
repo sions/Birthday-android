@@ -65,6 +65,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+        startService(new Intent(this, BirthdayNotificationService.class));
 
 		TextView currentDate = (TextView) findViewById(R.id.today);
 		String currentDateTimeString = DateFormat.getDateTimeInstance().format(
@@ -152,7 +153,6 @@ public class MainActivity extends Activity {
 			String text = getResources().getString(
 					R.string.happy_birthday_email_text);
 			Email email = new Email(record.getEmail(), subject, text,
-					record.getName());
 			startActivity(email.createIntent());
 		}
 			break;
