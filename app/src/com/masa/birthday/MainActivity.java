@@ -22,6 +22,8 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.masa.notifier.Email;
+
 public class MainActivity extends Activity {
 	ListView listView;
 	List<BirthdayRecord> birthdays;
@@ -66,12 +68,14 @@ public class MainActivity extends Activity {
 				new BirthdayRecord(
 						"sions",
 						new GregorianCalendar(1984,2,6).getTime(),
-						"placeholdeer");
+						"placeholdeer",
+						"sion@masa.com");
 		BirthdayRecord miris =
 				new BirthdayRecord(
 						"miris",
 						new GregorianCalendar(1984,2,14).getTime(),
-						"placeholdeer");
+						"placeholdeer",
+						"miri@masa.com");
 		
 		birthdays = new ArrayList<BirthdayRecord>();
 		birthdays.add(miris);
@@ -81,8 +85,6 @@ public class MainActivity extends Activity {
 		
 		// To register the button with context menu.
 		registerForContextMenu(listView);
-		//listView.setOnItemClickListener((OnItemClickListener) this);
-		//openContextMenu(listView);
 	}
 	private void openBirthdayEditor(BirthdayRecord record) {
 		IntentBuilder builder = new IntentBuilder(MainActivity.this, EditBirthdayActivity.class);
@@ -98,12 +100,9 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenu.ContextMenuInfo menuInfo) {
-		
 		super.onCreateContextMenu(menu, v, menuInfo);  
         MenuInflater m = getMenuInflater();  
         m.inflate(R.menu.birthday_list_menu, menu); 
-        
-
 	}
 
 	@Override
@@ -114,7 +113,12 @@ public class MainActivity extends Activity {
         		
 		switch (item.getItemId()) {
 		case R.id.send: {
-			//TODO(sions): Do you magic.
+			BirthdayRecord record = birthdays.get(position);
+			String subject = getResources().getString(R.string.happy_birthday_email_title,  
+					record.getName());
+			String text =  getResources().getString(R.string.happy_birthday_email_text);
+			Email email = new Email(record.getEmail(), subject, text, record.getName());
+			startActivity(email.createIntent());
 		}
 			break;
 		case R.id.edit: {
@@ -123,7 +127,6 @@ public class MainActivity extends Activity {
 		}
 			break;
 		case R.id.delete: {
-			
             birthdays.remove(position);  
             this.adapter.notifyDataSetChanged();  
 		}
