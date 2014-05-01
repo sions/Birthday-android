@@ -45,8 +45,11 @@ public class BirthdayRecordAdapter extends BaseAdapter {
 	      }
 
 	      // Populate
-	      //TextView nameView = (TextView) convertView.findViewById(R.id.name);
-	      ((TextView)convertView).setText(birthdayRecords.get(position).getName());
+	      TextView nameView = (TextView)convertView;
+	      nameView.setText(birthdayRecords.get(position).getName());
+	      nameView.setPadding(40, 40, 40, 40);
+	      nameView.setTextSize(20);
+	      
 	      return convertView;
 	    }
 
