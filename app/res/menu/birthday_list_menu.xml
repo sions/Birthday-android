@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.masa.birthday.MainActivity" >
+
+    <item
+        android:id="@+id/delete"
+        android:showAsAction="always"
+        android:title="@string/delete_item"/>
+
+    <item
+        android:id="@+id/send"
+        android:showAsAction="always"
+        android:title="@string/send_item"/>
+    
+    <item
+        android:id="@+id/edit"
+        android:showAsAction="always"
+        android:title="@string/edit_item"/>
+    
+</menu>
