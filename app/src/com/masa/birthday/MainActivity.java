@@ -9,6 +9,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -71,18 +72,15 @@ public class MainActivity extends Activity {
 		String currentDateTimeString = DateFormat.getDateTimeInstance().format(
 				new Date());
 		currentDate.setText(currentDateTimeString);
+		
+		
 
 		listView = (ListView) findViewById(R.id.birthdays);
-		BirthdayRecord sions = new BirthdayRecord("sions",
-				new GregorianCalendar(1984, 1, 6).getTime(), "placeholdeer",
-				"sion@masa.com");
-		BirthdayRecord miris = new BirthdayRecord("miris",
-				new GregorianCalendar(1984, 1, 14).getTime(), "placeholdeer",
-				"miri@masa.com");
 
-		birthdays = new ArrayList<BirthdayRecord>();
-		birthdays.add(miris);
-		birthdays.add(sions);
+		BirthdaysDatabase db = new BirthdaysDatabase(this);
+		birthdays = BirthdaysDatabase.readAll(db.getReadableDatabase());
+		db.close();
+
 		adapter = new BirthdayRecordAdapter(this, birthdays);
 		listView.setAdapter(adapter);
 
@@ -115,18 +113,27 @@ public class MainActivity extends Activity {
 			Log.e("error", "resultCode: " + resultCode);
 			return;
 		}
-		switch (requestCode) {
-		// Check which request we're responding to
-		case GET_BIRTHDAY_RECORD_REQUEST:
-			birthdays.remove(currentRecord);
-			// No break because after remove we re-add.
-		case ADD_BIRTHDAY_RECORD_REQUEST:
-			// Make sure the request was successful
-			Bundle bundle = data.getExtras();
-			BirthdayRecord record = new BirthdayRecord(bundle);
-			birthdays.add(record);
-			this.adapter.notifyDataSetChanged();
-			break;
+		
+		BirthdaysDatabase db = new BirthdaysDatabase(this);
+		SQLiteDatabase sql = db.getWritableDatabase();
+		try {
+			switch (requestCode) {
+			// Check which request we're responding to
+			case GET_BIRTHDAY_RECORD_REQUEST:
+				birthdays.remove(currentRecord);
+				BirthdaysDatabase.remove(sql, currentRecord);
+				// No break because after remove we re-add.
+			case ADD_BIRTHDAY_RECORD_REQUEST:
+				// Make sure the request was successful
+				Bundle bundle = data.getExtras();
+				BirthdayRecord record = new BirthdayRecord(bundle);
+				birthdays.add(record);
+				BirthdaysDatabase.add(sql, record);
+				this.adapter.notifyDataSetChanged();
+				break;
+			}
+		} finally {
+			db.close();
 		}
 	}
 
@@ -162,8 +169,15 @@ public class MainActivity extends Activity {
 		}
 			break;
 		case R.id.delete: {
-			birthdays.remove(position);
-			this.adapter.notifyDataSetChanged();
+			BirthdaysDatabase db = new BirthdaysDatabase(this);
+			try {
+				SQLiteDatabase sql = db.getWritableDatabase();
+				BirthdaysDatabase.remove(sql, birthdays.get(position));
+				birthdays.remove(position);
+				this.adapter.notifyDataSetChanged();
+			} finally {
+				db.close();
+			}
 		}
 			break;
 		}

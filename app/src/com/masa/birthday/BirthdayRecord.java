@@ -24,7 +24,7 @@ public class BirthdayRecord {
 	
 	public BirthdayRecord(Bundle bundle) {
 		this.name = bundle.getString("name");
-		this.birthday = new Date();//(Date)bundle.get("birthday");
+		this.birthday = EditBirthdayActivity.convertToDate(bundle.getString("birthday"));
 		this.photo = "";//bundle.getString("photo");
 		this.email = bundle.getString("email");
 	}
