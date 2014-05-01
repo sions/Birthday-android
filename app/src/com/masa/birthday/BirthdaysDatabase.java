@@ -3,6 +3,7 @@ package com.masa.birthday;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -11,6 +12,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 @SuppressLint("SimpleDateFormat")
 public class BirthdaysDatabase extends SQLiteOpenHelper {
@@ -91,13 +93,14 @@ public class BirthdaysDatabase extends SQLiteOpenHelper {
 	}
 	
 	private static BirthdayRecord cursorToRecord(Cursor cursor) {
+		Date date = null;
 		try {
-			return new BirthdayRecord(cursor.getString(1), 
-					iso8601Format.parse(cursor.getString(2)), 
-					cursor.getString(3), 
-					cursor.getString(4));
-		} catch (ParseException e) {
-			throw new IllegalArgumentException("Bad value in db " + cursor.getString(2));
+			date = iso8601Format.parse(cursor.getString(1));
+		} catch (ParseException e1) {
+			Log.e("BDAY-SQL", "Bad value in db " + cursor.getString(1));
 		}
+		
+		return new BirthdayRecord(cursor.getString(0), date, cursor.getString(2),
+				cursor.getString(3));
 	}
 }

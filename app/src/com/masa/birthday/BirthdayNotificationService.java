@@ -18,13 +18,14 @@ public class BirthdayNotificationService extends IntentService {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-	    //Toast.makeText(this, "service starting...", Toast.LENGTH_SHORT).show();
+	    Toast.makeText(this, "service starting...", Toast.LENGTH_SHORT).show();
 	    return super.onStartCommand(intent,flags,startId);
 	}
 	
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		BirthdaysDatabase db = new BirthdaysDatabase(this);
+		
 		List<BirthdayRecord> records = BirthdaysDatabase.readAll(db.getReadableDatabase());
 		db.close();
 		

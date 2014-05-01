@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -102,12 +105,16 @@ public class EditBirthdayActivity extends FragmentActivity {
 		updateDisplay();
 	}
 
+	public Date getDate(int year, int month, int day) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeInMillis(0);
+		cal.set(year, month, day, 1, 1, 1);
+		return cal.getTime(); 
+	}
+	
 	// updates the date in the TextView
-	private void updateDisplay() {
-		mDateView.setText(new StringBuilder()
-				// Month is 0 based so add 1
-				.append(mMonth + 1).append("-").append(mDay).append("-")
-				.append(mYear).append(" "));
+	private void updateDisplay() { 
+		mDateView.setText(DATE_FORMAT.format(getDate(mYear, mMonth, mDay)));
 	}
 
 	// the callback received when the user "sets" the date in the dialog
@@ -156,24 +163,25 @@ public class EditBirthdayActivity extends FragmentActivity {
 		
 	}
 
-	private Date convertToDate(String dateString) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+	@SuppressLint("SimpleDateFormat")
+	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM-dd-yyyy");
+	
+	public static Date convertToDate(String dateString) {
+		
 		Date convertedDate;
 		try {
-			convertedDate = dateFormat.parse(dateString);
+			convertedDate = DATE_FORMAT.parse(dateString);
 		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
+			Log.e("EDIT", e.toString());
+			return new Date();
 		}
 		return convertedDate;
 	}
 
 	private void openMainActivity() {
-		Date date = convertToDate((mDateView.getText()).toString());
-		Intent intent = new Intent(/*EditBirthdayActivity.this,
-				MainActivity.class*/);
+		Intent intent = new Intent();
 		intent.putExtra("name", mName.getText().toString());
-		//intent.putExtra("birthday", date);
+		intent.putExtra("birthday", mDateView.getText().toString());
 		//intent.putExtra("photo", mImageView.getTag().toString());
 		intent.putExtra("email", "noemail@support.yet");
 		//startActivity(intent);
