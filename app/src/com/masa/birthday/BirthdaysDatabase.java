@@ -59,7 +59,7 @@ public class BirthdaysDatabase extends SQLiteOpenHelper {
 		db.delete(BIRTHDAYS_TABLE_NAME, WHERE, whereClauseArgs(record));
 	}
 
-	public List<BirthdayRecord> readAll(SQLiteDatabase db, BirthdayRecord record) {
+	public static List<BirthdayRecord> readAll(SQLiteDatabase db) {
 		List<BirthdayRecord> records = new ArrayList<BirthdayRecord>();
 		Cursor cursor = db.query(BIRTHDAYS_TABLE_NAME, COLUMNS, null, null, null, null, null);
 		cursor.moveToFirst();
