@@ -8,7 +8,7 @@
 
     <string name="name">Name</string>
     <string name="btn_save">Save</string>
-    <string name="pick_date">Pick Date</string>
+    <string name="pick_date">&#8230;</string>
     
     
 </resources>
