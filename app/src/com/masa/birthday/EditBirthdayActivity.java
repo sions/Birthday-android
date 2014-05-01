@@ -1,6 +1,9 @@
 package com.masa.birthday;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -14,12 +17,14 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class EditBirthdayActivity extends FragmentActivity {
 	protected static int RESULT_LOAD_IMAGE = 1;
 
+	private EditText mName;
 	private TextView mDateView;
 	private ImageView mImageView;
 	private Button mSaveButton;
@@ -35,9 +40,31 @@ public class EditBirthdayActivity extends FragmentActivity {
 		setContentView(R.layout.activity_edit_birthday);
 
 		// capture our View elements
+		mName = (EditText)findViewById(R.id.name);
 		mDateView = (TextView) findViewById(R.id.date);
 		mImageView = (ImageView) findViewById(R.id.imageView);
 		mSaveButton = (Button) findViewById(R.id.btnSave);
+
+		String name = null;
+		String birthday = null;
+		String photo = null;
+		
+		Bundle params = getIntent().getExtras();
+		if (params != null) {
+		  name = params.getString("name");
+		  if (name != null) {
+			  mName.setText(name);
+		  }
+		  birthday = params.getString("birthday");
+		  if (birthday != null) {
+			  mDateView.setText(birthday);
+		  }
+		  photo = params.getString("photo");
+		  if (photo != null) {
+			  mImageView.setImageBitmap(BitmapFactory.decodeFile(photo));
+			  mImageView.setTag(photo);
+		  }
+		}
 
 		// add a click listener to the date view
 		mDateView.setOnClickListener(new View.OnClickListener() {
@@ -122,14 +149,30 @@ public class EditBirthdayActivity extends FragmentActivity {
 			String picturePath = cursor.getString(columnIndex);
 			cursor.close();
 
-			ImageView imageView = (ImageView) findViewById(R.id.imageView);
-			imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+			mImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+			mImageView.setTag(picturePath);
 		}
 	}
 
+	private Date convertToDate(String dateString) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		Date convertedDate;
+		try {
+			convertedDate = dateFormat.parse(dateString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return convertedDate;
+	}
+
 	private void openMainActivity() {
+		Date date = convertToDate((mDateView.getText()).toString());
 		Intent intent = new Intent(EditBirthdayActivity.this,
 				MainActivity.class);
+		intent.putExtra("name", mName.getText());
+		intent.putExtra("birthday", date);
+		intent.putExtra("photo", mImageView.getTag().toString());
 		startActivity(intent);
 	}
 }
