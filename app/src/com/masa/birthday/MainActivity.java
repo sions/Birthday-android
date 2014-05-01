@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -90,11 +91,10 @@ public class MainActivity extends Activity {
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenu.ContextMenuInfo menuInfo) {
-		// Context menu
-		menu.setHeaderTitle("My Context Menu");
-		menu.add(Menu.NONE, CONTEXT_MENU_SEND, Menu.NONE, "Add");
-		menu.add(Menu.NONE, CONTEXT_MENU_EDIT, Menu.NONE, "Edit");
-		menu.add(Menu.NONE, CONTEXT_MENU_DELETE, Menu.NONE, "Delete");
+		
+		super.onCreateContextMenu(menu, v, menuInfo);  
+        MenuInflater m = getMenuInflater();  
+        m.inflate(R.menu.birthday_list_menu, menu); 
 	}
 
 	@Override
@@ -102,7 +102,7 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 		case CONTEXT_MENU_SEND: {
-
+			//TODO(sions): Do you magic.
 		}
 			break;
 		case CONTEXT_MENU_EDIT: {
