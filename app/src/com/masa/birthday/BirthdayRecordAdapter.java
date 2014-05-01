@@ -46,20 +46,10 @@ public class BirthdayRecordAdapter extends BaseAdapter {
 
 	      // Populate
 	      TextView nameView = (TextView)convertView;
-	      nameView.setText(birthdayRecords.get(position).getName());
+	      nameView.setText(birthdayRecords.get(position).getName() + " " + birthdayRecords.get(position).getBirthday());
 	      nameView.setPadding(40, 40, 40, 40);
 	      nameView.setTextSize(20);
 	      
 	      return convertView;
 	    }
-
-		/*
-		 * // Allocate if (convertView == null) { convertView =
-		 * getLayoutInflater() .inflate(R.layout.item_list_element, null); }
-		 * 
-		 * // Populate TextView nameView = (TextView)
-		 * convertView.findViewById(R.id.name);
-		 * nameView.setText(products.get(position).getName()); return
-		 * convertView; }
-		 */
 }

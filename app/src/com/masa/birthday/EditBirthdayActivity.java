@@ -152,6 +152,8 @@ public class EditBirthdayActivity extends FragmentActivity {
 			mImageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 			mImageView.setTag(picturePath);
 		}
+		
+		
 	}
 
 	private Date convertToDate(String dateString) {
@@ -168,11 +170,14 @@ public class EditBirthdayActivity extends FragmentActivity {
 
 	private void openMainActivity() {
 		Date date = convertToDate((mDateView.getText()).toString());
-		Intent intent = new Intent(EditBirthdayActivity.this,
-				MainActivity.class);
-		intent.putExtra("name", mName.getText());
-		intent.putExtra("birthday", date);
-		intent.putExtra("photo", mImageView.getTag().toString());
-		startActivity(intent);
+		Intent intent = new Intent(/*EditBirthdayActivity.this,
+				MainActivity.class*/);
+		intent.putExtra("name", mName.getText().toString());
+		//intent.putExtra("birthday", date);
+		//intent.putExtra("photo", mImageView.getTag().toString());
+		intent.putExtra("email", "noemail@support.yet");
+		//startActivity(intent);
+		setResult(RESULT_OK, intent);
+		finish();  
 	}
 }
