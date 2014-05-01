@@ -7,6 +7,13 @@ public class BirthdayRecord {
 	private Date birthday;
 	private String photo;
 	
+	
+	
+	public BirthdayRecord(String name, Date birthday, String photo) {
+		this.name = name;
+		this.birthday = birthday;
+		this.photo = photo;
+	}
 	public String getName() {
 		return name;
 	}
