@@ -20,9 +20,9 @@ import android.widget.TextView;
 public class EditBirthdayActivity extends FragmentActivity {
 	protected static int RESULT_LOAD_IMAGE = 1;
 
-	private TextView mDateDisplay;
 	private TextView mDateView;
 	private ImageView mImageView;
+	private Button mSaveButton;
 	private int mYear;
 	private int mMonth;
 	private int mDay;
@@ -35,24 +35,33 @@ public class EditBirthdayActivity extends FragmentActivity {
 		setContentView(R.layout.activity_edit_birthday);
 
 		// capture our View elements
-		mDateDisplay = (TextView) findViewById(R.id.date);
 		mDateView = (TextView) findViewById(R.id.date);
 		mImageView = (ImageView) findViewById(R.id.imageView);
+		mSaveButton = (Button) findViewById(R.id.btnSave);
 
-		// add a click listener to the button
+		// add a click listener to the date view
 		mDateView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				showDialog(DATE_DIALOG_ID);
 			}
 		});
 
-		// add a click listener to the button
+		// add a click listener to the image view
 		mImageView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				Intent i = new Intent(
 						Intent.ACTION_PICK,
 						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 				startActivityForResult(i, RESULT_LOAD_IMAGE);
+			}
+		});
+
+		// add a click listener to the image view
+		mSaveButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				v.setEnabled(false);
+				openMainActivity();
+				v.setEnabled(true);
 			}
 		});
 
@@ -68,7 +77,7 @@ public class EditBirthdayActivity extends FragmentActivity {
 
 	// updates the date in the TextView
 	private void updateDisplay() {
-		mDateDisplay.setText(new StringBuilder()
+		mDateView.setText(new StringBuilder()
 				// Month is 0 based so add 1
 				.append(mMonth + 1).append("-").append(mDay).append("-")
 				.append(mYear).append(" "));
@@ -95,7 +104,7 @@ public class EditBirthdayActivity extends FragmentActivity {
 		}
 		return null;
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -116,5 +125,11 @@ public class EditBirthdayActivity extends FragmentActivity {
 			ImageView imageView = (ImageView) findViewById(R.id.imageView);
 			imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 		}
+	}
+
+	private void openMainActivity() {
+		Intent intent = new Intent(EditBirthdayActivity.this,
+				MainActivity.class);
+		startActivity(intent);
 	}
 }
