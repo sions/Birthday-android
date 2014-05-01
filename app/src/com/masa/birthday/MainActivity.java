@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,12 +19,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+<<<<<<< HEAD
+=======
+import android.widget.AdapterView.AdapterContextMenuInfo;
+>>>>>>> 86fae244d506e9eac118c3d6ada6a914bf31fdb6
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-
+	ListView listView;
+	List<BirthdayRecord> birthdays;
+	BirthdayRecordAdapter adapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,7 +58,7 @@ public class MainActivity extends Activity {
 			
 		});
 
-		ListView listView = (ListView) findViewById(R.id.birthdays);
+		listView = (ListView) findViewById(R.id.birthdays);
 		BirthdayRecord sions =
 				new BirthdayRecord(
 						"sions",
@@ -62,16 +70,12 @@ public class MainActivity extends Activity {
 						new GregorianCalendar(1984,2,14).getTime(),
 						"placeholdeer");
 		
-		List<BirthdayRecord> birthdays = new ArrayList<BirthdayRecord>();
+		birthdays = new ArrayList<BirthdayRecord>();
 		birthdays.add(miris);
 		birthdays.add(sions);
-		BirthdayRecordAdapter adapter = new BirthdayRecordAdapter(this,  birthdays);
+		adapter = new BirthdayRecordAdapter(this,  birthdays);
 		listView.setAdapter(adapter);
-/*		listView.setOnClickListener(new android.view.View.OnClickListener() {
-			public void onClick(View arg0) {
-				context
-			};
-		}*/
+		
 		// To register the button with context menu.
 		registerForContextMenu(listView);
 		//listView.setOnItemClickListener((OnItemClickListener) this);
@@ -83,10 +87,6 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 
-	final int CONTEXT_MENU_SEND = 1;
-	final int CONTEXT_MENU_EDIT = 2;
-	final int CONTEXT_MENU_DELETE = 3;
-
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenu.ContextMenuInfo menuInfo) {
@@ -94,23 +94,30 @@ public class MainActivity extends Activity {
 		super.onCreateContextMenu(menu, v, menuInfo);  
         MenuInflater m = getMenuInflater();  
         m.inflate(R.menu.birthday_list_menu, menu); 
+        
+
 	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();  
+        int position =  (int) info.position;  
+        		
 		switch (item.getItemId()) {
-		case CONTEXT_MENU_SEND: {
+		case R.id.send: {
 			//TODO(sions): Do you magic.
 		}
 			break;
-		case CONTEXT_MENU_EDIT: {
+		case R.id.edit: {
 			// Edit Action
-
+			// TODO(alinashn): Send to to miri with position.
 		}
 			break;
-		case CONTEXT_MENU_DELETE: {
-
+		case R.id.delete: {
+			
+            birthdays.remove(position);  
+            this.adapter.notifyDataSetChanged();  
 		}
 			break;
 		}
@@ -118,18 +125,12 @@ public class MainActivity extends Activity {
 		return super.onContextItemSelected(item);
 	}
 	public static final int MENU_ADD = Menu.FIRST;
-	public static final int MENU_WISH_HAPPY_BIRTHDAY = Menu.FIRST + 1;
-	public static final int MENU_EDIT = Menu.FIRST + 2;
-	public static final int MENU_DELETE = Menu.FIRST + 3;
 	    
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 
 	    menu.add(Menu.NONE, MENU_ADD, Menu.NONE, "Add");
-	    menu.add(Menu.NONE, MENU_EDIT, Menu.NONE, "Edit");
-	    menu.add(Menu.NONE, MENU_WISH_HAPPY_BIRTHDAY, Menu.NONE, "Wish Happy Birthday");
-	    menu.add(Menu.NONE, MENU_DELETE, Menu.NONE, "Delete");
 
 		/*// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);*/
@@ -141,14 +142,8 @@ public class MainActivity extends Activity {
 		switch(item.getItemId())
         {
             case MENU_ADD:
-
+            	openBirthdayEditor();
             return true;
-        case MENU_DELETE:
-
-            return true;
-        case MENU_EDIT:
-        	openBirthdayEditor();
-        	return true;
         default:
             return super.onOptionsItemSelected(item);
         }
