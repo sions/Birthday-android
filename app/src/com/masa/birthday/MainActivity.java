@@ -38,7 +38,12 @@ public class MainActivity extends Activity {
 		    // TODO(alinashn): Go to Miri's View.
 		  }
 		});
-
+		
+		/*ListView listView = (ListView) findViewById(R.id.birthdays);
+	    BirthdayRecordAdapter adapter = new BirthdayRecordAdapter();
+	    listView.setAdapter(adapter);
+	    listView.setOnItemClickListener(this);
+*/
 
 	}
 
