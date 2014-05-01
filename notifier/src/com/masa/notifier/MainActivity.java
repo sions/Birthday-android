@@ -5,7 +5,10 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -34,18 +37,34 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				Resources res = v.getResources();
 				
-				@SuppressWarnings("deprecation")
-				Notification noti = new Notification.Builder(MainActivity.this)
+				Notification.Builder builder = new Notification.Builder(v.getContext())
 						.setContentTitle("Miri has a birthday today.")
 						.setContentText("Click to send happy birthday")
 						.setSmallIcon(R.drawable.cake)
-						.setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.cake))
-						.getNotification();
+						.setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.cake));
+				
+				// Creates an explicit intent for an Activity in your app
+				Intent i = new Intent(Intent.ACTION_SEND);
+				i.setType("message/rfc822");
+				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"sion.schori@gmail.com"});
+				i.putExtra(Intent.EXTRA_SUBJECT, "Happy Birthday!");
+				i.putExtra(Intent.EXTRA_TEXT   , "Miri has a birthday!");
 
+				TaskStackBuilder stackBuilder = TaskStackBuilder.create(v.getContext());
+				// Adds the Intent that starts the Activity to the top of the stack
+				stackBuilder.addNextIntent(i);
+				PendingIntent resultPendingIntent =
+				        stackBuilder.getPendingIntent(
+				            0,
+				            PendingIntent.FLAG_UPDATE_CURRENT
+				        );
+				builder.setContentIntent(resultPendingIntent);
+
+				
 				NotificationManager mNotificationManager = 
 						(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 				// mId allows you to update the notification later on.
-				mNotificationManager.notify(INTENT_ID, noti);
+				mNotificationManager.notify(INTENT_ID, builder.build());
 			}
 		});
 
