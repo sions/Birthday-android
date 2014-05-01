@@ -152,7 +152,7 @@ public class MainActivity extends Activity {
 					R.string.happy_birthday_email_title, record.getName());
 			String text = getResources().getString(
 					R.string.happy_birthday_email_text);
-			Email email = new Email(record.getEmail(), subject, text,
+			Email email = new Email(record.getEmail(), subject, text, record.getName());
 			startActivity(email.createIntent());
 		}
 			break;
