@@ -8,22 +8,17 @@ import java.util.List;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-<<<<<<< HEAD
-=======
 import android.widget.AdapterView.AdapterContextMenuInfo;
->>>>>>> 86fae244d506e9eac118c3d6ada6a914bf31fdb6
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,6 +26,26 @@ public class MainActivity extends Activity {
 	ListView listView;
 	List<BirthdayRecord> birthdays;
 	BirthdayRecordAdapter adapter;
+	
+	  public static class IntentBuilder {
+	    private Intent intent;
+
+	    public IntentBuilder(Context context, Class<?> activityClass) {
+	      intent = new Intent(context, activityClass);
+	    }
+	    public void setName(String value) {
+	      intent.putExtra("name", value);
+	    }
+	    public void setBirthday(Date value) {
+		      intent.putExtra("birthday", value);
+		    }
+	    public void setPhoto(String value) {
+		      intent.putExtra("photo", value);
+		    }
+	    public Intent build() {
+	      return intent;
+	    }
+	  }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +84,14 @@ public class MainActivity extends Activity {
 		//listView.setOnItemClickListener((OnItemClickListener) this);
 		//openContextMenu(listView);
 	}
-	private void openBirthdayEditor() {
-		Intent intent = new Intent(MainActivity.this,
-				EditBirthdayActivity.class);
+	private void openBirthdayEditor(BirthdayRecord record) {
+		IntentBuilder builder = new IntentBuilder(MainActivity.this, EditBirthdayActivity.class);
+		if (record != null) {
+			builder.setName(record.getName());
+			builder.setBirthday(record.getBirthday());
+			builder.setPhoto(record.getPhoto());
+		}
+		Intent intent = builder.build();
 		startActivity(intent);
 	}
 
@@ -99,7 +119,7 @@ public class MainActivity extends Activity {
 			break;
 		case R.id.edit: {
 			// Edit Action
-			// TODO(alinashn): Send to to miri with position.
+			openBirthdayEditor(birthdays.get(position));
 		}
 			break;
 		case R.id.delete: {
@@ -130,7 +150,7 @@ public class MainActivity extends Activity {
 		switch(item.getItemId())
         {
             case MENU_ADD:
-            	openBirthdayEditor();
+            	openBirthdayEditor(null /* No current record to edit. */);
             return true;
         default:
             return super.onOptionsItemSelected(item);
