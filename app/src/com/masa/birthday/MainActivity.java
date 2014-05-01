@@ -177,5 +177,4 @@ public class MainActivity extends Activity {
 			return rootView;
 		}
 	}
-
 }

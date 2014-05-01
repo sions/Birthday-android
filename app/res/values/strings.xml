@@ -8,7 +8,7 @@
 
     <string name="name">Name</string>
     <string name="btn_save">Save</string>
-    <string name="pick_date">&#8230;</string>
+    <string name="pick_image">Please pick an image from the gallery</string> 
     
     <string name="edit_item">Edit</string>
     <string name="delete_item">Delete</string>
