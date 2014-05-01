@@ -44,16 +44,6 @@ public class MainActivity extends Activity {
 				new Date());
 		currentDate.setText(currentDateTimeString);
 
-		final Button addButton = (Button) findViewById(R.id.add);
-		addButton.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				v.setEnabled(false);
-				openBirthdayEditor();
-				v.setEnabled(true);
-			}
-		});
-
 		listView = (ListView) findViewById(R.id.birthdays);
 		BirthdayRecord sions =
 				new BirthdayRecord(
