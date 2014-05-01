@@ -1,11 +1,17 @@
 package com.masa.notifier;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,7 +26,7 @@ import android.os.Build;
 
 public class MainActivity extends Activity {
 
-	private static final int INTENT_ID = 13;
+	private int count = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +38,14 @@ public class MainActivity extends Activity {
 		notifyButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Resources res = v.getResources();
+				List<Email> emails = new ArrayList<Email>();
+				emails.add(new Email("bla@gmail.com", "Test" + count, "Testing", "Miri"));
+				if (count % 2 == 1) {
+					emails.add(new Email("foo@gmail.com", "2nd Test" + count, "Testing", "Alina"));
+				}
 				
-				@SuppressWarnings("deprecation")
-				Notification noti = new Notification.Builder(MainActivity.this)
-						.setContentTitle("Miri has a birthday today.")
-						.setContentText("Click to send happy birthday")
-						.setSmallIcon(R.drawable.cake)
-						.setLargeIcon(BitmapFactory.decodeResource(res, R.drawable.cake))
-						.getNotification();
-
-				NotificationManager mNotificationManager = 
-						(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-				// mId allows you to update the notification later on.
-				mNotificationManager.notify(INTENT_ID, noti);
+				Notify.notify(v.getContext(), emails);
+				++count;
 			}
 		});
 
