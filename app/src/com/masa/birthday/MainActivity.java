@@ -72,11 +72,7 @@ public class MainActivity extends Activity {
 		birthdays.add(sions);
 		adapter = new BirthdayRecordAdapter(this,  birthdays);
 		listView.setAdapter(adapter);
-/*		listView.setOnClickListener(new android.view.View.OnClickListener() {
-			public void onClick(View arg0) {
-				context
-			};
-		}*/
+		
 		// To register the button with context menu.
 		registerForContextMenu(listView);
 		//listView.setOnItemClickListener((OnItemClickListener) this);
