@@ -19,10 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-<<<<<<< HEAD
-=======
 import android.widget.AdapterView.AdapterContextMenuInfo;
->>>>>>> 86fae244d506e9eac118c3d6ada6a914bf31fdb6
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
