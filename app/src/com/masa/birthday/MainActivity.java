@@ -14,18 +14,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction().add(R.id.container, new PlaceholderFragment())
-					.commit();
+			getFragmentManager().beginTransaction()
+					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		
+
 		TextView currentDate = (TextView) findViewById(R.id.today);
-		String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+		String currentDateTimeString = DateFormat.getDateTimeInstance().format(
+				new Date());
 		currentDate.setText(currentDateTimeString);
 
 	}
@@ -61,9 +62,9 @@ public class MainActivity extends Activity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+			View rootView = inflater.inflate(R.layout.fragment_main, container,
+					false);
 			return rootView;
 		}
 	}
-
 }
