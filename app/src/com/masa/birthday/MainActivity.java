@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -27,6 +29,16 @@ public class MainActivity extends Activity {
 		TextView currentDate = (TextView) findViewById(R.id.today);
 		String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
 		currentDate.setText(currentDateTimeString);
+		
+		final Button addButton = (Button) findViewById(R.id.add);
+		addButton.setOnClickListener(new OnClickListener() {
+		  @Override
+		  public void onClick(View v) {
+		    v.setEnabled(false);
+		    // TODO(alinashn): Go to Miri's View.
+		  }
+		});
+
 
 	}
 
