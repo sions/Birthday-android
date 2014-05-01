@@ -3,6 +3,7 @@
 	<name>Birthday</name>
 	<comment></comment>
 	<projects>
+		<project>Notifier</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
