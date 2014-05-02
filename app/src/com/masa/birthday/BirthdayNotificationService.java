@@ -18,7 +18,6 @@ public class BirthdayNotificationService extends IntentService {
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-	    Toast.makeText(this, "service starting...", Toast.LENGTH_SHORT).show();
 	    return super.onStartCommand(intent,flags,startId);
 	}
 	
@@ -38,5 +37,6 @@ public class BirthdayNotificationService extends IntentService {
 		if (!emails.isEmpty()) {
 			Notify.notify(this, emails);
 		}
+		stopSelf();
 	}
 }

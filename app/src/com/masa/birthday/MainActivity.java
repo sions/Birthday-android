@@ -66,7 +66,10 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-        startService(new Intent(this, BirthdayNotificationService.class));
+
+		// Initialize alarm that will execute service periodically. 
+		BirthdayCheckAlarm alarm = new BirthdayCheckAlarm();
+		alarm.setAlarm(this);
 
 		TextView currentDate = (TextView) findViewById(R.id.today);
 		String currentDateTimeString = DateFormat.getDateTimeInstance().format(

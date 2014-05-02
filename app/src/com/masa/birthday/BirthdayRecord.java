@@ -8,7 +8,7 @@ import android.content.res.Resources;
 import com.masa.notifier.Email;
 
 public class BirthdayRecord {
-	private static final int DAYS_BEFORE_REMINDER = 30;
+	private static final int DAYS_BEFORE_REMINDER = 0;
 
 	private String name;
 	private Date birthday;
@@ -66,14 +66,14 @@ public class BirthdayRecord {
 	}
 
 	public boolean shouldFireNotification() {
-		return getDaysTillBirthday() < DAYS_BEFORE_REMINDER;
+		return getDaysTillBirthday() <= DAYS_BEFORE_REMINDER;
 	}
 	
 	@SuppressWarnings("deprecation")
 	public int getDaysTillBirthday() {
 	  int daysFromYearStart = birthday.getMonth() * 30 + birthday.getDate();
 	  int currentDaysFromYearStart = new Date().getMonth() * 30 + new Date().getDate();
-	  int daysTillBirthday = daysFromYearStart > currentDaysFromYearStart ?
+	  int daysTillBirthday = daysFromYearStart >= currentDaysFromYearStart ?
 		  daysFromYearStart - currentDaysFromYearStart :
 		  365 + daysFromYearStart - currentDaysFromYearStart;
       return daysTillBirthday;
